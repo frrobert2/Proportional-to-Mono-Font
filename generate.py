@@ -1,26 +1,23 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
 Generates the Mono font files based on a proportional font
-
 Required files:
 - vendor/fonttobechanged.ttf
 - vendor/referencefont.ttf
-
 Based on:
 - monospacifier: https://github.com/cpitclaudel/monospacifier/blob/master/monospacifier.py
 - YosemiteAndElCapitanSystemFontPatcher: https://github.com/dtinth/YosemiteAndElCapitanSystemFontPatcher/blob/master/bin/patch
 - https://github.com/dtinth/comic-mono-font
 - Comic Mono: https://github.com/dtinth/comic-mono-font
+
 """
 
 import os
 import re
 import sys
 
-reload(sys)
-sys.setdefaultencoding('UTF8')
 
 import fontforge
 import psMat
@@ -45,21 +42,21 @@ def adjust_height(source, template, scale):
     source.transform(psMat.scale(scale))
 #change the next to lines to the font you want to convert and the reference font
 # make sure those two fonts are in the vendor directory
-font = fontforge.open('vendor/comic-shanns.otf')
+font = fontforge.open('vendor/Lexend-Regular.ttf')
 ref = fontforge.open('vendor/Cousine-Regular.ttf')
 for g in font.glyphs():
     uni = g.unicode
-    category = unicodedata.category(unichr(uni)) if 0 <= uni <= sys.maxunicode else None
+    category = unicodedata.category(chr(uni)) if 0 <= uni <= sys.maxunicode else None
     if g.width > 0 and category not in ['Mn', 'Mc', 'Me']:
-        # change target width to either make characters norrow or wide
-        target_width = 510
+                # change target width to either make characters norrow or wide
+        target_width = 750
         if g.width != target_width:
             delta = target_width - g.width
             g.left_side_bearing += delta / 2
             g.right_side_bearing += delta - g.left_side_bearing
             g.width = target_width
 # change next 4 lines to desired information
-font.familyname = 'Comic Mono'
+font.familyname = 'Lexend Mono'
 font.version = '0.1.1'
 font.comment = 'https://github.com/dtinth/comic-mono-font'
 font.copyright = 'https://github.com/dtinth/comic-mono-font/blob/master/LICENSE'
@@ -67,19 +64,19 @@ font.copyright = 'https://github.com/dtinth/comic-mono-font/blob/master/LICENSE'
 adjust_height(font, ref, 0.875)
 font.sfnt_names = [] # Get rid of 'Prefered Name' etc.
 #change to desired font name
-font.fontname = 'ComicMono'
+font.fontname = 'LexendMono'
 #change to desired full name
-font.fullname = 'Comic Mono'
+font.fullname = 'Lexend Mono'
 #change to desired file name
-font.generate('ComicMono.ttf')
+font.generate('LexandMono.ttf')
 
 font.selection.all()
 #Bold section
 #change to desired font name
-font.fontname = 'ComicMono-Bold'
+font.fontname = 'LexendMono-Bold'
 #change to desired full name
-font.fullname = 'Comic Mono Bold'
+font.fullname = 'Lexend Mono Bold'
 font.weight = 'Bold'
 font.changeWeight(32, "LCG", 0, 0, "squish")
 #change to desired file name
-font.generate('ComicMono-Bold.ttf')
+font.generate('LexendMono-Bold.ttf')
