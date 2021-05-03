@@ -7,7 +7,9 @@ This may be a very silly idea.  I have got the script to work to generate a mono
 ## Dependencies
 
 Python 2
+
 The python bindings for font forge
+
 This link may help you install the bindings
 
 [https://stackoverflow.com/questions/36508944/install-fontcustom-fontforge-in-ubuntu](https://stackoverflow.com/questions/36508944/install-fontcustom-fontforge-in-ubuntu)
