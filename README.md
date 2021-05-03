@@ -14,7 +14,7 @@ This link may help you install the bindings
 
 [https://stackoverflow.com/questions/36508944/install-fontcustom-fontforge-in-ubuntu](https://stackoverflow.com/questions/36508944/install-fontcustom-fontforge-in-ubuntu)
 
-##How to use the script
+## How to use the script
 
 Install the Dependencies
 Put the proportional font you are going to convert in the vendor directory
