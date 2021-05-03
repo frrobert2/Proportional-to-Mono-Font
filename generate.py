@@ -2,15 +2,17 @@
 # -*- coding: utf-8 -*-
 
 """
-Generates the Comic Mono font files based on Comic Shanns font.
+Generates the Mono font files based on a proportional font
 
 Required files:
-- vendor/comic-shanns.otf
-- vendor/Cousine-Regular.ttf
+- vendor/fonttobechanged.ttf
+- vendor/referencefont.ttf
 
 Based on:
 - monospacifier: https://github.com/cpitclaudel/monospacifier/blob/master/monospacifier.py
 - YosemiteAndElCapitanSystemFontPatcher: https://github.com/dtinth/YosemiteAndElCapitanSystemFontPatcher/blob/master/bin/patch
+- https://github.com/dtinth/comic-mono-font
+- Comic Mono: https://github.com/dtinth/comic-mono-font
 """
 
 import os
@@ -41,34 +43,43 @@ def adjust_height(source, template, scale):
                 ]:
         setattr(source, attr, getattr(template, attr))
     source.transform(psMat.scale(scale))
-
+#change the next to lines to the font you want to convert and the reference font
+# make sure those two fonts are in the vendor directory
 font = fontforge.open('vendor/comic-shanns.otf')
 ref = fontforge.open('vendor/Cousine-Regular.ttf')
 for g in font.glyphs():
     uni = g.unicode
     category = unicodedata.category(unichr(uni)) if 0 <= uni <= sys.maxunicode else None
     if g.width > 0 and category not in ['Mn', 'Mc', 'Me']:
+        # change target width to either make characters norrow or wide
         target_width = 510
         if g.width != target_width:
             delta = target_width - g.width
             g.left_side_bearing += delta / 2
             g.right_side_bearing += delta - g.left_side_bearing
             g.width = target_width
-
+# change next 4 lines to desired information
 font.familyname = 'Comic Mono'
 font.version = '0.1.1'
 font.comment = 'https://github.com/dtinth/comic-mono-font'
 font.copyright = 'https://github.com/dtinth/comic-mono-font/blob/master/LICENSE'
-
+#change number in adjust_height to make font shorter or taller
 adjust_height(font, ref, 0.875)
 font.sfnt_names = [] # Get rid of 'Prefered Name' etc.
+#change to desired font name
 font.fontname = 'ComicMono'
+#change to desired full name
 font.fullname = 'Comic Mono'
+#change to desired file name
 font.generate('ComicMono.ttf')
 
 font.selection.all()
+#Bold section
+#change to desired font name
 font.fontname = 'ComicMono-Bold'
+#change to desired full name
 font.fullname = 'Comic Mono Bold'
 font.weight = 'Bold'
 font.changeWeight(32, "LCG", 0, 0, "squish")
+#change to desired file name
 font.generate('ComicMono-Bold.ttf')
