@@ -1,4 +1,5 @@
 # This project is a fork of dtinth/comic-mono-font
+https://github.com/dtinth/comic-mono-font
 
 That project was to create a font. This project is designed to use the generate.py script and use it to take a proportional spaced font and make it a mono spaced font.
 
